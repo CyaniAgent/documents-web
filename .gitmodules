@@ -1,0 +1,4 @@
+[submodule "content/docs"]
+	path = content/docs
+	url = https://github.com/CyaniAgent/Documents
+	branch = main
