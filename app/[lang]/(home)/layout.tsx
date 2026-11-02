@@ -1,4 +1,5 @@
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { AnimatedHomeHeader } from '@/components/animated-slots';
 import { baseOptions } from '@/lib/layout.shared';
 
 export default async function Layout({
@@ -7,5 +8,9 @@ export default async function Layout({
 }: LayoutProps<'/[lang]'>) {
   const { lang } = await params;
 
-  return <HomeLayout {...baseOptions(lang)}>{children}</HomeLayout>;
+  return (
+    <HomeLayout slots={{ header: AnimatedHomeHeader }} {...baseOptions(lang)}>
+      {children}
+    </HomeLayout>
+  );
 }

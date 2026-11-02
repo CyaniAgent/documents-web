@@ -9,8 +9,11 @@ import {
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { DocInfoRow } from '@/components/doc-info';
 import { getMDXComponents } from '@/components/mdx';
+import { docsPageSlots } from '@/components/viewer-transition';
 import { i18n } from '@/lib/i18n';
+import { getPageInfo } from '@/lib/page-info';
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
 import { source } from '@/lib/source';
 
@@ -42,7 +45,7 @@ export default async function Page(
   if (!params.slug || params.slug.length === 0) {
     const t = getIndexTexts(params.lang);
     return (
-      <DocsPage>
+      <DocsPage slots={docsPageSlots}>
         <DocsTitle>{t.title}</DocsTitle>
         <DocsDescription>{t.description}</DocsDescription>
       </DocsPage>
@@ -54,13 +57,15 @@ export default async function Page(
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  const info = getPageInfo(page);
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage slots={docsPageSlots} toc={page.data.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
       </DocsDescription>
+      <DocInfoRow wordCount={info.wordCount} lastUpdated={info.lastUpdated} />
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover

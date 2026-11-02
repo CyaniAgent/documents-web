@@ -1,0 +1,29 @@
+# deps & build output — recreated inside the image
+node_modules
+.next
+.source
+coverage
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# local env / secrets must never enter the image
+.env*
+*.pem
+
+# logs & misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.vercel
+
+# docker files themselves don't belong in the build context
+Dockerfile
+.dockerignore
+docker-compose.yaml
+
+# NOTE: .git is intentionally NOT ignored — lib/page-info.ts runs
+# `git log` at build time (root repo + content/docs submodule, ~1MB total)
+# to show each doc's "last updated" date.

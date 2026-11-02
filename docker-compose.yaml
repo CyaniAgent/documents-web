@@ -1,0 +1,29 @@
+# CyaniAgent Docs — production deployment
+#
+#   docker compose up -d --build            # build & start on port 4117
+#   PORT=8080 docker compose up -d --build  # custom host port
+#   docker compose logs -f                  # tail logs
+#   docker compose down                     # stop
+services:
+  documents-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cyaniagent-documents-web:latest
+    container_name: documents-web
+    restart: unless-stopped
+    ports:
+      - '${PORT:-4117}:3000'
+    environment:
+      NEXT_TELEMETRY_DISABLED: '1'
+    # healthcheck is defined in the Dockerfile (interval 30s, probes /zh)
+
+    # --- content bind mount (optional) ---
+    # Open the host's ./content folder to the container with WRITE access:
+    # rw is the default (no `:ro` suffix), so documents can be added/edited
+    # on either side of the mount. Keep the trailing slash OFF on the source
+    # to mount the directory itself, not a copy of its contents.
+    # volumes:
+    #   - ./content:/app/content
+    # NOTE: docs are compiled into the image at build time — after editing
+    # mounted content, rebuild (docker compose up -d --build) to publish it.

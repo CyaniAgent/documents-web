@@ -1,6 +1,7 @@
 import { i18nProvider } from 'fumadocs-ui/i18n';
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
+import { RouteShell } from '@/components/route-shell';
 import { i18n } from '@/lib/i18n';
 import { translations } from '@/lib/layout.shared';
 import '../global.css';
@@ -30,7 +31,7 @@ export default async function Layout({
     <html lang={lang} className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <RootProvider i18n={i18nProvider(translations, lang)}>
-          {children}
+          <RouteShell>{children}</RouteShell>
         </RootProvider>
       </body>
     </html>

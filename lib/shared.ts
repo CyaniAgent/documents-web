@@ -2,6 +2,12 @@ import { createGetUrl } from 'fumadocs-core/source';
 import { i18n } from './i18n';
 
 export const appName = 'CyaniAgent Docs';
+/**
+ * Content root. Keep in sync with `dir` in the `defineDocs` macro
+ * (lib/source.ts) — the macro needs a compile-time literal, so it cannot
+ * import this constant.
+ */
+export const contentDir = 'content/docs';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';
